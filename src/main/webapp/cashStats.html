@@ -134,13 +134,14 @@
 				      		<div class="input-group mb-3" style="width: 50%;">
 								<input type="text" class="form-control" id="year">
 								<div class="input-group-append">
-									<button type="submit" class="btn btn-sm btn-success" id="totalOutAndInByYearChart">Chart</button>
+									<button type="submit" class="btn btn-sm btn-info" id="totalOutAndInByYearChart">Chart</button>
 								</div>
 							</div>
 				   		</div>
 				   		
 				   		<br>
 				   		
+				   		<!-- 2번 요구사항 출력 -->
 				   		<div>
 				      		<canvas id="pieChart"></canvas>
 				   		</div>
@@ -260,6 +261,63 @@
 				});
 			});
 			
+			$('#totalOfMonthByYearChart').click(function() {
+			   $.ajax({
+			      url:'/totalOfMonthByYear',
+			      type:'GET',
+			      success: function(data) {
+			         var ctx = document.getElementById('myChart').getContext('2d');
+			         var chart = new Chart(ctx, {
+			            // The type of chart we want to create
+			             type: 'bar',
+			
+			             // The data for our dataset
+			             data: {
+			                // 배열 형태로 작성
+			                 labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+			                 datasets: [{
+			                     label: '2019년 월별 지출 내역 차트',
+			                     backgroundColor: [
+			                        'rgba(255, 99, 132, 0.2)',
+			                         'rgba(54, 162, 235, 0.2)',
+			                         'rgba(255, 206, 86, 0.2)',
+			                         'rgba(75, 192, 192, 0.2)',
+			                         'rgba(153, 102, 255, 0.2)',
+			                         'rgba(255, 159, 64, 0.2)', 
+			                         'rgba(255, 99, 132, 0.2)',
+			                         'rgba(54, 162, 235, 0.2)',
+			                         'rgba(255, 206, 86, 0.2)',
+			                         'rgba(75, 192, 192, 0.2)',
+			                         'rgba(153, 102, 255, 0.2)',
+			                         'rgba(255, 159, 64, 0.2)'
+			                     ],
+			                     borderColor: [
+			                        'rgba(255, 99, 132, 1)',
+			                         'rgba(54, 162, 235, 1)',
+			                         'rgba(255, 206, 86, 1)',
+			                         'rgba(75, 192, 192, 1)',
+			                         'rgba(153, 102, 255, 1)',
+			                         'rgba(255, 159, 64, 1)',
+			                         'rgba(255, 99, 132, 1)',
+			                         'rgba(54, 162, 235, 1)',
+			                         'rgba(255, 206, 86, 1)',
+			                         'rgba(75, 192, 192, 1)',
+			                         'rgba(153, 102, 255, 1)',
+			                         'rgba(255, 159, 64, 1)'
+			                     ],
+			                     data:[data.january, data.february, data.march, data.april, data.may, data.june, 
+			                          data.july, data.august, data.september, data.october, data.november, data.december],
+			                     borderWidth: 1
+			                 }]
+			             },
+			
+			             // Configuration options go here
+			             options: {}
+			         });
+			      }
+			   });
+			});
+			
 			$('#totalOutAndInByYearChart').click(function(){
 		         $.ajax({
 		            url:'/totalOutAndInByYear/'+$('#year').val(),
@@ -270,7 +328,6 @@
 		                  type: 'pie',
 		                  data: {
 		                     datasets: [{
-		                        label: 'test',
 		                        data: [data.수입, data.지출], 
 		                        backgroundColor: [
 		                           'rgba(54, 162, 235, 0.2)',
